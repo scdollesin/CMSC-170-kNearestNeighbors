@@ -1,10 +1,17 @@
+# EXERCISE #7 K NEAREST NEIGHBORS
+# AUTHOR: Samantha Shane C. Dollesin
+# STUDENT NO.: 2020-01893
+# SECTION: WX-1L
+# PROGRAM DESCRIPTION: This program takes a two files (the training and input data sets) and a value for k, classifies the unlabelled points in the input
+#                      file using the k-nearest neighbors method, and writes the results on an output file and a modified version of the training data set.
+
 from tkinter.filedialog import askopenfilename
 from math import *
 
 #this function takes a file and returns a 2D list containing the dataset
 def getData(file):
     dataset = file.read().split("\n")
-    print("# of points in training data set: ", len(dataset))
+    print("# of points in data set: ", len(dataset))
 
     for i in range(len(dataset)):
         if (dataset[i] == ''):
@@ -49,6 +56,7 @@ if (trainingfile.readable()):
             #for n in nearest_neighbors:
             #    print(sorted_dist[n])    #print distances of the nearest neighbors
 
+            #count the frequency of each classification
             classifications = {}
             for neighbor in nearest_neighbors:
                 classif = training_dataset[neighbor][n]
@@ -60,8 +68,17 @@ if (trainingfile.readable()):
             unlabelled_points[i].append(int(max(classifications, key=classifications.get)))     #append the classification with the highest frequency
             print(unlabelled_points[i])
 
-        #export to output file
+            training_dataset.append(unlabelled_points[i])      #add the newly labelled point to the training data
+
+        #export the modified training data set to a new csv file
+        csv = open("modified training data.csv", "w")
+        for p in training_dataset:
+            csv.write(", ".join(str(e) for e in p) + "\n")
+        csv.close()
+
+        #export newly labelled points to its own output file
         output = open("output.txt", "w")
         for p in unlabelled_points:
             output.write(", ".join(str(e) for e in p) + "\n")
         output.close()
+        
