@@ -11,7 +11,6 @@ from math import *
 #this function takes a file and returns a 2D list containing the dataset
 def getData(file):
     dataset = file.read().split("\n")
-    print("# of points in data set: ", len(dataset))
 
     for i in range(len(dataset)):
         if (dataset[i] == ''):
@@ -21,6 +20,7 @@ def getData(file):
             for j in range(len(dataset[i])):
                 dataset[i][j] = float(dataset[i][j])
 
+    print("# of points in data set: ", len(dataset))
     return dataset
 
 #select and read the training data set
